@@ -8,9 +8,10 @@ public class Player : MonoBehaviour
 {
     [Header("Player Stats")]
     [SerializeField] GameObject playerPrefab;
-    [SerializeField] float playerHealth = 100f;
+    [SerializeField] int playerHealth = 100;
     [SerializeField] int playerLives = 3;
     [SerializeField] int respawnTime = 2;
+
     HealthBar healthBar;
 
     [Header("Movement")]
