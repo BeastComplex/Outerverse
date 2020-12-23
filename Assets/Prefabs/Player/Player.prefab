@@ -104,14 +104,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 1599966505353788091}
   playerHealth: 300
-  playerLives: 3
   moveSpeed: 6
   laserPrefab: {fileID: 7849723236350136860, guid: c112aa7c2552440478bb23bf4022cf9d,
     type: 3}
   laserVFX: {fileID: 4975427015505024826, guid: d92bb70644358564aa40bb1abd78af76,
     type: 3}
   projectileSpeed: 20
-  fireRate: 0.1
+  fireRate: 0.5
   durationOfExplosion: 1
   explosionVFX: {fileID: 858287092383211419, guid: 18d9ed55787e09045a72ac250832f185,
     type: 3}
