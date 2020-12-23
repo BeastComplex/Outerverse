@@ -16,4 +16,25 @@ public class HealthBar : MonoBehaviour
     {
         slider.value = currentHealth;
     }
+
+    // PlayerLives Display
+    [SerializeField] Image[] livesDisplay;
+    [SerializeField] Sprite life;
+    [SerializeField] Sprite noLife;
+    int lives;
+    public void UpdatePlayerLives(int newLives)
+    {
+        if (newLives > livesDisplay.Length) { newLives = livesDisplay.Length; }
+        for (int i = 0; i < livesDisplay.Length; i++)
+        {
+            if (i >= newLives)
+            {
+                livesDisplay[i].sprite = noLife;
+            }
+            else
+            {
+                livesDisplay[i].sprite = life;
+            }
+        }
+    }
 }

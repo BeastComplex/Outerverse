@@ -44,6 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b8c14c952f0c74b913ec74397ebb0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: 0
+  timeScaler: 1
+  player: {fileID: 0}
+  playerPrefab: {fileID: 1599966505353788091, guid: 5c96d0784e0a4864c808ba0464d54a00,
+    type: 3}
+  playerLives: 3
+  respawnTime: 2
+  respawning: 0
 --- !u!114 &3252791679219250450
 MonoBehaviour:
   m_ObjectHideFlags: 0

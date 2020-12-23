@@ -14,7 +14,7 @@ public class SceneNav : MonoBehaviour
     }
     public void LoadGame()
     {
-        FindObjectOfType<GameSession>().ResetScore();
+        FindObjectOfType<GameSession>().ResetGameSession();
         SceneManager.LoadScene("Game");
     }
     IEnumerator WaitAndLoad()

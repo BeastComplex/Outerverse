@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,9 +10,6 @@ public class Player : MonoBehaviour
     [Header("Player Stats")]
     [SerializeField] GameObject playerPrefab;
     [SerializeField] int playerHealth = 100;
-    [SerializeField] int playerLives = 3;
-    [SerializeField] int respawnTime = 2;
-
     HealthBar healthBar;
 
     [Header("Movement")]
@@ -30,6 +28,8 @@ public class Player : MonoBehaviour
     [SerializeField] AudioClip deathSound;
     [SerializeField] [Range(0, 1)] float deathSoundVolume = 0.6f;
 
+    GameSession gameSession;
+
     Coroutine firingCoroutine;
 
     // Movement Variables
@@ -43,9 +43,12 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        gameSession = FindObjectOfType<GameSession>();
         SetUpMoveBoundaries();
         SetupHealthBar();
         startPosition = new Vector2(transform.position.x, transform.position.y);
+        gameSession.RegisterPlayer(gameObject, startPosition, quaternion.identity);
+
     }
 
 
@@ -77,8 +80,6 @@ public class Player : MonoBehaviour
         var newVertical =   Mathf.Clamp(transform.position.y + vertical, yMin, yMax);
 
         transform.position = new Vector2(newHorizontal, newVertical);
-        Debug.Log(joystick.Horizontal);
-        Debug.Log(joystick.Vertical);
     }
     void MoveWithKeyboard()
     {
@@ -136,32 +137,16 @@ public class Player : MonoBehaviour
     {
         GameObject explosion = Instantiate(explosionVFX, transform.position, transform.rotation);
         AudioSource.PlayClipAtPoint(deathSound, Camera.main.transform.position, deathSoundVolume);
-        if (playerLives <= 0)
-        {
-            FindObjectOfType<SceneNav>().GetComponent<SceneNav>().LoadGameOver();
-        }
-        else
-        {
-            SpawnPlayer();
-        }
+        gameSession.PlayerDied();
         Destroy(gameObject);
-    }
-    public void SetPlayerLives(int lives)
-    {
-        playerLives = lives;
-    }
-    void SpawnPlayer()
-    {
-        new WaitForSeconds(respawnTime);
-        Player player = Instantiate(playerPrefab, startPosition, transform.rotation).GetComponent<Player>();
-        player.SetPlayerLives(--playerLives);
     }
 
     void SetupHealthBar()
     {
         healthBar = FindObjectOfType<HealthBar>();
-        healthBar.SetupHealthBar(Mathf.RoundToInt(playerHealth));
-        healthBar.UpdateHealth(Mathf.RoundToInt(playerHealth));
-        Debug.Log("Health bar setup!");
+        healthBar.SetupHealthBar(playerHealth);
+        healthBar.UpdateHealth(playerHealth);
+        healthBar.UpdatePlayerLives(gameSession.GetPlayerLives());
+
     }
 }

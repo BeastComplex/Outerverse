@@ -19,7 +19,6 @@ public class ScoreDisplay : MonoBehaviour
     public void UpdateScoreDisplay(int score)
     {
         scoreDisplay.text = score.ToString();
-        print("You scored, now your score is: " + score);
         if (score > PlayerPrefs.GetInt("HighScore"))
         {
             PlayerPrefs.SetInt("HighScore", score);
